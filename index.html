@@ -1,12 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Bold Text Generator</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      background-color: #F1F1F1;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #5764C6;
+    }
+    form {
+      margin: 20px 0;
+    }
+    input[type="text"] {
+      font-size: 18px;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #5764C6;
+      width: 60%;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #5764C6;
+      color: white;
+      font-size: 18px;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 24px;
+      color: black;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello</h1>
+  <div class="container">
+    <h1>Paste your text in the textbox below</h1>
+    <form>
+      <input type="text" id="input" placeholder="Enter a sentence...">
+      <button type="submit" id="submit">Generate</button>
+    </form>
+    <div class="output">
+      <!-- Output will be displayed here -->
+    </div>
+  </div>
+  <script>
+    // Add your JavaScript code here
+    const input = document.getElementById("input");
+    const submit = document.getElementById("submit");
+    const output = document.querySelector(".output");
+
+    submit.addEventListener("click", function(event) {
+      event.preventDefault(); // prevent form from submitting
+      const value = input.value;
+      const words = value.split(" ");
+      let result = "";
+      for (let i = 0; i < words.length; i++) {
+        result += `<b>${words[i].substring(0, words[i].length / 2)}</b>${words[i].substring(words[i].length / 2)} `;
+      }
+      output.innerHTML = result;
+    });
+  </script>
 </body>
 </html>
