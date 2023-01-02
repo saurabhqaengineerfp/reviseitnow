@@ -5,66 +5,96 @@
   <style>
     /* Add your CSS styles here */
     body {
-      background-color: #e5e8dc;
+      background-color: #d8decc;
       font-family: sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 0px;
     }
     .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      flex-flow: column wrap;
+      justify-content: space-around;
+      align-items: center;
+      align-content: center;
     }
     h1 {
-      color: #5764C6;
+      color: #222E50;
+      font-family: monospace;
+      text-align: center;
+      font-size: 3vw;
+    }
+    p {
+        font-family: monospace;
+        text-align: center;
+        padding: 2vw;
     }
     form {
-      margin: 20px 0;
+      margin: 20px 20px;
     }
-    input[type="text"] {
+    textarea {
       font-size: 18px;
-      padding: 10px;
+      background-color: #bcd2d1;
+      padding: auto;
       border: none;
-      border-bottom: 2px solid #5764C6;
-      width: 60%;
-      margin-bottom: 20px;
+      /* border-bottom: 2px solid #5764C6; */
+      border-radius: 10px;
+      width: 100%;
     }
+
     button {
-      background-color: #5764C6;
+      background-color: #535775;
       color: white;
       font-size: 18px;
       padding: 12px 20px;
+      border-radius: 5px;
       border: none;
       cursor: pointer;
+      margin: 20px;
+      width: 96%;
+    }
+    button:hover {
+        background-color: #4CAF50;
+        color: white;
     }
     .output {
+      white-space: pre-wrap;
       margin-top: 20px;
-      font-size: 24px;
+      font-family: Franklin Gothic Medium;
+      /* 'Franklin Gothic Medium' helvetica */
+      font-size: 1.3vw;
+      line-height: 2vw;
       color: black;
+      border-radius: 15px;
+      background-color: #e1ebeb;
+      padding: 5vw;
+      min-width: 90%;
+      max-width: 90%;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>"Helps you speed up your revision process."</h1>
+    <h1>"Speed Up Your Revision!"</h1>
+    <p>""Enter the text you want to read quickly. Whether you're revisiting it or reading it for the first time, it will significantly increase your reading speed.""</p>
     <form>
-      <input type="text" id="input" placeholder="copy/paste your text here">
-      <button type="submit" id="submit">Generate</button>
+      <textarea name="text" id="biginput" cols="60" rows="10" placeholder="copy/paste your text here"></textarea>
+      <button type="submit" id="submit">Generate Text</button>
     </form>
     <div class="output">
-      <!-- Output will be displayed here -->
+      Generated text will be displayed here
     </div>
   </div>
   <script>
     // Add your JavaScript code here
-    const input = document.getElementById("input");
+    const biginput = document.getElementById("biginput");
+    //const input = document.getElementById("input");
     const submit = document.getElementById("submit");
     const output = document.querySelector(".output");
 
     submit.addEventListener("click", function(event) {
       event.preventDefault(); // prevent form from submitting
-      const value = input.value;
+      const value = biginput.value;
       const words = value.split(" ");
       let result = "";
       for (let i = 0; i < words.length; i++) {
