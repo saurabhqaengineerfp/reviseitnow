@@ -74,6 +74,8 @@
     }
   </style>
 </head>
+
+
 <body>
   <div class="container">
     <h1>"Speed Up Your Revision!"</h1>
@@ -81,16 +83,23 @@
     <form>
       <textarea name="text" id="biginput" cols="60" rows="10" placeholder="copy/paste your text here"></textarea>
       <button type="submit" id="submit">Generate Text</button>
+      <!-- <button type="submit" id="pdfButtonId">Generate pdf</button> -->
+      <button onclick="formatText()" id="pdfButtonId">Create PDF</button>
+      <br><br>
+      <a id="download-link" style="display: none;">Open PDF</a>
     </form>
-    <div class="output">
+    <div class="output" id="output">
       Generated text will be displayed here
     </div>
   </div>
+
+
   <script>
     // Add your JavaScript code here
     const biginput = document.getElementById("biginput");
     const submit = document.getElementById("submit");
-    const output = document.querySelector(".output");
+    const output = document.getElementById("output");
+    
 
     submit.addEventListener("click", function(event) {
       event.preventDefault(); // prevent form from submitting
@@ -101,7 +110,119 @@
         result += `<b>${words[i].substring(0, words[i].length / 2)}</b>${words[i].substring(words[i].length / 2)} `;
       }
       output.innerHTML = result;
+    //   console.log(result);
     });
-  </script>
+   </script>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script>
+      function formatText() {
+        event.preventDefault();
+        // Get the input text
+        const input = document.getElementById('biginput').value;
+    
+        // Split the text into lines
+        const lines = input.split('\n');
+    
+        // Create a new PDF with the formatted text
+        const doc = new jsPDF();
+    
+        // Set the font size and line height
+        doc.setFontSize(12);
+        doc.setLineHeightFactor(0.5);
+    
+        // Keep track of the current x and y positions
+        let x = 10;
+        let y = 10;
+    
+        // Loop through each line
+        for (const line of lines) {
+          // Split the line into words
+          const words = line.split(' ');
+    
+          // Loop through each word
+          for (const word of words) {
+            // Split the word into two parts
+            const half = Math.ceil(word.length / 2);
+            const firstHalf = word.substring(0, half);
+            const secondHalf = word.substring(half);
+  
+            // Add the first half of the word to the PDF in bold font
+            doc.setFontType('bold');
+            doc.text(firstHalf, x, y);
+  
+          // Calculate the width of the first half of the word
+          const width = doc.getStringUnitWidth(firstHalf) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  
+          // Increment the x position by the width of the first half of the word
+          x += width;
+  
+          // Add the second half of the word to the PDF in regular font
+          doc.setFontType('normal');
+          doc.text(secondHalf, x, y);
+  
+          // Calculate the width of the second half of the word
+          const width2 = doc.getStringUnitWidth(secondHalf) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  
+          // Increment the x position by the width of the second half of the word
+          x += width2;
+  
+          // Add a space character after the word
+          doc.text(' ', x, y);
+  
+          // Increment the x position by the width of the space character
+          x += doc.getStringUnitWidth(' ') * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  
+          // Check if the text has reached the end of the line
+          if (x > doc.internal.pageSize.getWidth() - 20) {
+          // If so, move down to the next line and reset the x position
+          x = 10;
+          y += doc.getLineHeightFactor() * doc.internal.getFontSize();
+  
+          // Check if the y position has reached the end of the page
+          if (y > doc.internal.pageSize.getHeight() - 20) {
+              // If so, add a new page and reset the y position
+              doc.addPage();
+              y = 10;
+          }
+          }
+          }
+  
+          // Increment the y position by the line height
+          y += doc.getLineHeightFactor() * doc.internal.getFontSize();
+  
+          // Add a new line character
+          doc.text('\n', x, y);
+  
+          // Increment the y position by the line height
+          y += doc.getLineHeightFactor() * doc.internal.getFontSize();
+  
+          // Add a new line character
+          doc.text('\n', x, y);
+  
+          // Increment the y position by the line height
+          y += doc.getLineHeightFactor() * doc.internal.getFontSize() - 10;
+  
+          // Reset the x position
+          x = 10;
+  
+          // Check if the y position has reached the end of the page
+          if (y > doc.internal.pageSize.getHeight() - 20) {
+          // If so, add a new page and reset the y position
+          doc.addPage();
+          y = 10;
+          }
+          }
+  
+          // Display a download link for the PDF
+          const downloadLink = document.getElementById('download-link');
+          downloadLink.style.display = 'block';
+          downloadLink.href = doc.output('bloburl');
+          }
+          </script>
 </body>
 </html>
