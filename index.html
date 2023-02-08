@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ReviseItNow</title>
+
+
+  <title>Revise It Now</title>
   <style>
     /* Add your CSS styles here */
     body {
-      background-color: #d8decc;
+      background-color: #227093;
+      /* background-color: #d8decc; */
       font-family: sans-serif;
       margin: 0;
       padding: 0px;
@@ -18,12 +21,28 @@
       align-items: center;
       align-content: center;
     }
+
     h1 {
-      color: #222E50;
+      color: #ffffff;
+      /* color: #222E50; */
+      font-family: monospace;
+      text-align: center;
+      font-size: 5vw;
+      text-decoration-line: underline;
+      text-decoration-style: double;
+      text-decoration-color: rgb(155, 167, 51);
+      text-shadow: rgb(18, 16, 5) 1px 0 10px;
+    }
+
+    h2 {
+      color: #c7e6c7;
+      /* color: #222E50; */
       font-family: monospace;
       text-align: center;
       font-size: 3vw;
+      text-shadow: rgb(11, 9, 3) 1px 0 5px;
     }
+
     p {
       font-family: monospace;
       text-align: center;
@@ -44,11 +63,12 @@
     }
 
     button {
-      background-color: #535775;
-      color: white;
+      background-color: #c9c95c;
+      /* background-color: #535775; */
+      color: rgba(255, 255, 255, 0.733);
       font-size: 18px;
       padding: 12px 20px;
-      border-radius: 5px;
+      border-radius: 35px;
       border: none;
       cursor: pointer;
       margin: 20px;
@@ -57,6 +77,7 @@
     button:hover {
         background-color: #4CAF50;
         color: white;
+        transition-duration: 0.7s;
     }
     .output {
       white-space: pre-wrap;
@@ -72,28 +93,70 @@
       min-width: 90%;
       max-width: 90%;
     }
+
+    #pdf-content {
+      font-family: sans-serif;
+      font-size: 18px;
+      white-space: pre-wrap;
+      padding: 2vw;
+    }
+
   </style>
+
+
+
 </head>
 
+
+
+
+
+
+<!-- ------------------------------------HTML------------------------------------------ -->
 
 <body>
   <div class="container">
     <h1>"Speed Up Your Revision!"</h1>
-    <p>""Enter the text you want to read quickly. Whether you're revisiting it or reading it for the first time, it will significantly increase your reading speed.""</p>
+    <p>"Enter the text in the text box below and click <strong>'Generate Quick Revision Text'</strong> to significantly increase your reading speed.<br> You can also click <strong>'Generate Quick Revision PDF'</strong> to create a pdf for offline reading"</p>
     <form>
-      <textarea name="text" id="biginput" cols="60" rows="10" placeholder="copy/paste your text here"></textarea>
-      <button type="submit" id="submit">Generate Text</button>
+      <textarea name="text" id="biginput" cols="60" rows="10" placeholder=" 1. Copy/paste your text here... &#10 2. Click 'Generate Quick Revision Text' button below &#10 3. Go to the bottom of the webpage for generated text "></textarea>
+      <button type="submit" id="submit">Generate Quick Revision Text</button>
       <!-- <button type="submit" id="pdfButtonId">Generate pdf</button> -->
-      <button onclick="formatText()" id="pdfButtonId">Create PDF</button>
-      <br><br>
+      <button onclick="formatText()" id="pdfButtonId">Generate Quick Revision PDF</button>
+      <br>
       <a id="download-link" style="display: none;">Open PDF</a>
     </form>
+<!-- rough -->
+
+
+    <h2>Upload A PDF and Generate Quick Revision PDF from it</h2>
+    <input type="file" id="pdf-file" accept=".pdf">
+    <button onclick="extractPDF()">Generate Quick Revision PDF</button>
+    <div id="pdf-content" style="display: none;"></div>
+
+    <h2>Summarize Your Text For A Second Grader</h2>
+    <textarea id="input2" rows="10" cols="50" placeholder=" Copy/paste your text here..."></textarea>
+    <br><br>
+    <button id="summarizeButton">Summarize</button>
+    <br><br>
+    <p id="output2"></p>
+<!-- rough end -->
+<!-- --- ----------------------------------------------->
+
     <div class="output" id="output">
       Generated text will be displayed here
     </div>
   </div>
 
 
+
+
+<!-- ---------------------------------scripts-------------------------------------- -->
+
+
+
+
+<!-- ------------------------------------------------- -->
   <script>
     // Add your JavaScript code here
     const biginput = document.getElementById("biginput");
@@ -107,18 +170,21 @@
       const words = value.split(" ");
       let result = "";
       for (let i = 0; i < words.length; i++) {
-        result += `<b>${words[i].substring(0, words[i].length / 2)}</b>${words[i].substring(words[i].length / 2)} `;
+        const halfLength = Math.round(words[i].length / 2);
+        result += `<b>${words[i].substring(0, halfLength)}</b>${words[i].substring(halfLength)} `;
       }
       output.innerHTML = result;
-    //   console.log(result);
     });
    </script>
 
-<!-- -------------------------------------------------------------------------------------------- -->
 
 
+
+
+<!-- Create PDF File-------------------------------------------------------------------------------------------- -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <!-- 1.5.3 -->
     <script>
       function formatText() {
         event.preventDefault();
@@ -224,5 +290,148 @@
           downloadLink.href = doc.output('bloburl');
           }
           </script>
+
+
+
+
+
+
+<!-- Extract PDF and create PDF======================================================================================== -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.10.100/pdf.min.js"></script>
+
+<script>
+  function extractPDF() {
+    // Get the PDF file from the input
+    var file = document.getElementById('pdf-file').files[0];
+
+    // Check if the file is a PDF
+    if (file.type !== 'application/pdf') {
+      alert('Please select a PDF file');
+      return;
+    }
+
+    
+
+    // Use the FileReader API to read the contents of the PDF file
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      // Use the PDFJS library to parse the PDF and extract the text content
+      PDFJS.getDocument(e.target.result).then(function(pdf) {
+        var pages = [];
+        for (var i = 0; i < pdf.numPages; i++) {
+          // Get the text content of each page
+          pdf.getPage(i + 1).then(function(page) {
+            page.getTextContent({ normalizeWhitespace: true }).then(function(textContent) {
+              // Concatenate the text content of all pages into a single string
+               pages.push(textContent.items.map(function(item) {
+                 return item.str;
+               }).join(' '));
+
+
+
+              // When all pages have been processed, update the div with the combined text
+              if (pages.length === pdf.numPages) {
+                document.getElementById('pdf-content').innerText = pages.join('\n');
+                extractAndFormatText();
+              
+              }
+            });
+          });
+        }
+      });
+    };
+    reader.readAsArrayBuffer(file);
+  
+  }
+
+// -------------------------------------------------------------------
+ 
+
+function extractAndFormatText() {
+    // Get the input text
+    const input = document.getElementById('pdf-content').textContent;
+    console.log(input);
+
+    // Split the text into lines
+    const lines = input.split(/\r?\n/);
+
+    // Create a new PDF with the formatted text
+    const doc = new jsPDF();
+
+    // Set the font size and line height
+    doc.setFontSize(12);
+    doc.setLineHeightFactor(1.5);
+
+    // Set the width of the text area
+    const textAreaWidth = 170;
+
+    // Keep track of the current x and y positions
+    let x = 10;
+    let y = 10;
+
+    // Loop through each line
+    for (const line of lines) {
+      // Reset the x position to the left margin
+      x = 10;
+
+      const words = line.match(/\S+|\s+/g);
+
+      // Loop through each word
+      for (const word of words) {
+        // Split the word into two parts
+        const half = Math.ceil(word.length / 2);
+        const firstHalf = word.substring(0, half);
+        const secondHalf = word.substring(half);
+
+        // Add the first half of the word to the PDF in bold font
+        doc.setFontType('bold');
+        doc.text(firstHalf, x, y);
+
+        // Calculate the width of the first half of the word
+        const width = doc.getStringUnitWidth(firstHalf) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+        // Increment the x position by the width of the first half of the word
+        x += width;
+
+        // Add the second half of the word to the PDF in regular font
+        doc.setFontType('normal');
+        doc.text(secondHalf, x, y);
+
+        // Calculate the width of the second half of the word
+        const width2 = doc.getStringUnitWidth(secondHalf) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+        // Increment the x position by the width of the second half of the word
+        x += width2;
+
+        if (x > textAreaWidth) {
+          x = 10;
+          y += doc.internal.getLineHeight() / doc.internal.scaleFactor;
+        }
+        // Add a space character after the word
+        doc.text(' ', x, y);
+
+        // Increment the x position by the width of the space character
+        x += doc.getStringUnitWidth(' ') * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+        if (y > doc.internal.pageSize.height - 10) {
+          doc.addPage();
+          x = 10;
+          y = 10;
+        }
+      }
+
+      // Increment the y position for the next line
+      y += doc.internal.getLineHeight() / doc.internal.scaleFactor;
+    }
+
+    // Save the PDF to the user's device
+    doc.save('formatted_text.pdf');
+ };
+
+</script>
 </body>
 </html>
+
