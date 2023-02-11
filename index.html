@@ -7,8 +7,10 @@
   <style>
     /* Add your CSS styles here */
     body {
-      background-color: #227093;
-      /* background-color: #d8decc; */
+      /* background-color: #ff8a00;
+      background: linear-gradient(to right, #ff8a00, #e52e71); */
+      background-color: #8EC5FC;
+      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
       font-family: sans-serif;
       margin: 0;
       padding: 0px;
@@ -25,36 +27,42 @@
     h1 {
       color: #ffffff;
       /* color: #222E50; */
-      font-family: monospace;
-      text-align: center;
-      font-size: 5vw;
-      text-decoration-line: underline;
-      text-decoration-style: double;
-      text-decoration-color: rgb(155, 167, 51);
-      text-shadow: rgb(18, 16, 5) 1px 0 10px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      /* font-weight:bolder; */
+      text-align: left;
+      margin-left: 5%;
+      align-self: flex-start;
+      font-size: 8.8vw;
+      text-decoration: underline;
+      text-decoration-color: #F8CBA6;
+      /* text-shadow: rgb(200, 150, 50) 15px 10 30px; */
     }
 
     h2 {
-      color: #c7e6c7;
+      color: #f5f3f0;
       /* color: #222E50; */
-      font-family: monospace;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       text-align: center;
       font-size: 3vw;
-      text-shadow: rgb(11, 9, 3) 1px 0 5px;
+      /* text-shadow: rgb(11, 9, 3) 1px 0 5px; */
     }
 
     p {
       font-family: monospace;
-      text-align: center;
+      color: dimgrey;
+      margin-left: 5%;
+      margin-right: 5%;
+      text-align:justify;
       font-size: 1.4vw;
       padding: 0.01vw;
+      font-weight: 900;
     }
     form {
       margin: 20px 20px;
     }
     textarea {
       font-size: 18px;
-      background-color: #bcd2d1;
+      background-color: #ebece4;
       padding: auto;
       border: none;
       /* border-bottom: 2px solid #5764C6; */
@@ -63,9 +71,8 @@
     }
 
     button {
-      background-color: #c9c95c;
-      /* background-color: #535775; */
-      color: rgba(255, 255, 255, 0.733);
+      background-color: #FEF3D8;
+      color: rgba(29, 72, 112, 0.574);
       font-size: 18px;
       padding: 12px 20px;
       border-radius: 35px;
@@ -75,10 +82,12 @@
       width: 96%;
     }
     button:hover {
-        background-color: #4CAF50;
+        background-color: #50f5bb;
         color: white;
         transition-duration: 0.7s;
     }
+
+
     .output {
       white-space: pre-wrap;
       margin-top: 20px;
@@ -88,7 +97,7 @@
       line-height: 2vw;
       color: black;
       border-radius: 15px;
-      background-color: #e1ebeb;
+      background-color: #ffffff;
       padding: 5vw;
       min-width: 90%;
       max-width: 90%;
@@ -116,10 +125,10 @@
 
 <body>
   <div class="container">
-    <h1>"Speed Up Your Revision!"</h1>
-    <p>"Enter the text in the text box below and click <strong>'Generate Quick Revision Text'</strong> to significantly increase your reading speed.<br> You can also click <strong>'Generate Quick Revision PDF'</strong> to create a pdf for offline reading"</p>
+    <h1>QUICK<br> REVISION<br> TOOLS<br></h1>
+    <p>Enter the text in the text box below and click <strong>'Generate Quick Revision Text'</strong> to significantly increase your reading speed.<br> You can also click <strong>'Generate Quick Revision PDF'</strong> to create a pdf for offline reading</p>
     <form>
-      <textarea name="text" id="biginput" cols="60" rows="10" placeholder=" 1. Copy/paste your text here... &#10 2. Click 'Generate Quick Revision Text' button below &#10 3. Go to the bottom of the webpage for generated text "></textarea>
+      <textarea name="text" id="biginput" cols="60" rows="10" placeholder=" &#10  1. Copy/paste your text here... &#10  2. Click 'Generate Quick Revision Text' button below &#10  3. Go to the bottom of the webpage for generated text "></textarea>
       <button type="submit" id="submit">Generate Quick Revision Text</button>
       <!-- <button type="submit" id="pdfButtonId">Generate pdf</button> -->
       <button onclick="formatText()" id="pdfButtonId">Generate Quick Revision PDF</button>
